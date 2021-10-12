@@ -54,6 +54,23 @@
               Forgot your password?
             </router-link>
           </el-form-item>
+
+          <p class="centered-spaced">
+            <button
+              id="login-orcid-button"
+              @click="authenticateWithORCID"
+            >
+              <img
+                id="orcid-id-icon"
+                src="/static/images/orcid_24x24.png"
+                width="24"
+                height="24"
+                alt="Logo for ORCID"
+              >
+              Login with ORCID Id
+            </button>
+          </p>
+
           <p class="terms sign-up">Don't have an account?
 
             <router-link
@@ -79,7 +96,9 @@
               Privacy Policy
             </a>.
           </p>
+
         </el-form>
+
         <!-- two factor form --->
         <el-form
           v-if="showToken"
@@ -214,6 +233,7 @@ export default Vue.component('bf-login', {
      * @param {Object} e
      */
     onFormSubmit: function(e) {
+      console.log("onFormSubmit() called")
       e.preventDefault()
 
       this.$refs.loginForm
@@ -338,6 +358,10 @@ export default Vue.component('bf-login', {
       this.twoFactorForm.token = ''
       this.isLoggingIn = false
     }
+  },
+
+  authenticateWithORCID: function() {
+    console.log("authenticateWithORCID(): called")
   }
 })
 </script>
@@ -399,6 +423,12 @@ export default Vue.component('bf-login', {
     margin-top: 30px;
   }
 
+  .centered-spaced {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+  }
+
   .sign-in,
   .forgot-password {
     width: 50%;
@@ -419,5 +449,30 @@ export default Vue.component('bf-login', {
       display: flex;
     }
   }
+}
+#login-orcid-button {
+  border: 1px solid #d3d3d3;
+  padding: 0.3em;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 1px 1px 3px #999;
+  cursor: pointer;
+  color: #999;
+  font-weight: bold;
+  font-size: 0.8em;
+  line-height: 24px;
+  vertical-align: middle;
+}
+
+#login-orcid-button:hover {
+  border: 1px solid #338caf;
+  color: #338caf;
+}
+
+#orcid-id-icon {
+  display: block;
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  float: left;
 }
 </style>
