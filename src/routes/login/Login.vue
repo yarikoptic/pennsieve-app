@@ -54,51 +54,46 @@
               Forgot your password?
             </router-link>
           </el-form-item>
-
-          <p class="centered-spaced">
-            <button
-              id="login-orcid-button"
-              @click="authenticateWithORCID"
-            >
-              <img
-                id="orcid-id-icon"
-                src="/static/images/orcid_24x24.png"
-                width="24"
-                height="24"
-                alt="Logo for ORCID"
-              >
-              Login with ORCID Id
-            </button>
-          </p>
-
-          <p class="terms sign-up">Don't have an account?
-
-            <router-link
-              :to="{name: 'create-account'}"
-              >
-                Create one here
-            </router-link>
-          </p>
-
-          <p class="terms">
-            By signing in to Pennsieve you accept our <a
-              class="grey-link"
-              href="https://docs.pennsieve.io/page/pennsieve-terms-of-use"
-              target="_blank"
-            >
-              Terms of Use
-            </a>
-            and <a
-              class="grey-link"
-              href="https://docs.pennsieve.io/page/privacy-policy"
-              target="_blank"
-            >
-              Privacy Policy
-            </a>.
-          </p>
-
         </el-form>
 
+        <p class="centered-spaced">
+          <button
+            id="login-orcid-button">
+            <img
+              id="orcid-id-icon"
+              src="/static/images/orcid_24x24.png"
+              width="24"
+              height="24"
+              alt="Logo for ORCID">
+            Login with ORCID Id
+          </button>
+        </p>
+
+        <p class="terms sign-up">Don't have an account?
+
+          <router-link
+            :to="{name: 'create-account'}"
+            >
+              Create one here
+          </router-link>
+        </p>
+
+        <p class="terms">
+          By signing in to Pennsieve you accept our <a
+            class="grey-link"
+            href="https://docs.pennsieve.io/page/pennsieve-terms-of-use"
+            target="_blank"
+          >
+            Terms of Use
+          </a>
+          and <a
+            class="grey-link"
+            href="https://docs.pennsieve.io/page/privacy-policy"
+            target="_blank"
+          >
+            Privacy Policy
+          </a>.
+        </p>
         <!-- two factor form --->
         <el-form
           v-if="showToken"
@@ -233,7 +228,6 @@ export default Vue.component('bf-login', {
      * @param {Object} e
      */
     onFormSubmit: function(e) {
-      console.log("onFormSubmit() called")
       e.preventDefault()
 
       this.$refs.loginForm
@@ -358,10 +352,6 @@ export default Vue.component('bf-login', {
       this.twoFactorForm.token = ''
       this.isLoggingIn = false
     }
-  },
-
-  authenticateWithORCID: function() {
-    console.log("authenticateWithORCID(): called")
   }
 })
 </script>
@@ -423,12 +413,6 @@ export default Vue.component('bf-login', {
     margin-top: 30px;
   }
 
-  .centered-spaced {
-    text-align: center;
-    margin-bottom: 20px;
-    margin-top: 30px;
-  }
-
   .sign-in,
   .forgot-password {
     width: 50%;
@@ -448,6 +432,12 @@ export default Vue.component('bf-login', {
     .el-form-item__content {
       display: flex;
     }
+  }
+
+  .centered-spaced {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
   }
 }
 #login-orcid-button {
