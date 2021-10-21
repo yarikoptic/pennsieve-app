@@ -58,7 +58,8 @@
 
         <p class="centered-spaced">
           <button
-            id="login-orcid-button">
+            id="login-orcid-button"
+            @click="onLoginWithORCID">
             <img
               id="orcid-id-icon"
               src="/static/images/orcid_24x24.png"
@@ -189,7 +190,9 @@ export default Vue.component('bf-login', {
       tempSessionToken: '',
       showToken: false,
       isLoggingIn: false,
-      isLoadingTwoFactor: false
+      isLoadingTwoFactor: false,
+      oauthWindow: '',
+      oauthCode: '',
     }
   },
 
@@ -269,14 +272,22 @@ export default Vue.component('bf-login', {
      * @param {Object} response
      */
      handleLoginSuccess: function(user) {
-      const token = pathOr('', ['signInUserSession', 'accessToken', 'jwtToken'], user)
-      const userAttributes = propOr({}, 'attributes', user)
-      this.updateCognitoUser(user)
-      if (user.challengeName === 'SOFTWARE_TOKEN_MFA') {
-        this.showToken = true
-      } else {
-        EventBus.$emit('login', {token, userAttributes, user})
-      }
+       console.log("handleLoginSuccess() user:")
+       console.log(user)
+       const token = pathOr('', ['signInUserSession', 'accessToken', 'jwtToken'], user)
+       const userAttributes = propOr({}, 'attributes', user)
+       this.updateCognitoUser(user)
+       console.log("handleLoginSuccess() token:")
+       console.log(token)
+       console.log("handleLoginSuccess() userAttributes:")
+       console.log(userAttributes)
+       if (user.challengeName === 'SOFTWARE_TOKEN_MFA') {
+         console.log("handleLoginSuccess() SOFTWARE_TOKEN_MFA")
+         this.showToken = true
+       } else {
+         console.log("handleLoginSuccess() EventBus.$emit(...)")
+         EventBus.$emit('login', {token, userAttributes, user})
+       }
     },
 
     /**
@@ -351,6 +362,30 @@ export default Vue.component('bf-login', {
       this.loginForm.password = ''
       this.twoFactorForm.token = ''
       this.isLoggingIn = false
+    },
+
+    onLoginWithORCID: function(e) {
+      e.preventDefault()
+      console.log("onLoginWithORCID()")
+      this.sendFederatedLoginRequest('ORCID')
+    },
+
+    async sendFederatedLoginRequest(p) {
+      console.log("sendFederatedLoginRequest()")
+      this.isLoggingIn = true
+      try {
+        const cred = await Auth.federatedSignIn({customProvider: 'ORCID'})
+        const user = await Auth.currentAuthenticatedUser()
+        this.handleLoginSuccess(user)
+      } catch (error) {
+        // alert("sendFederatedLoginRequest() error:" + error)
+        this.isLoggingIn = false
+        EventBus.$emit('toast', {
+          detail: {
+            msg: `There was an error with your login attempt. Please try again.`
+          }
+        })
+      }
     }
   }
 })
