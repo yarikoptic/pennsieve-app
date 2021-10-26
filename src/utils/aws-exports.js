@@ -5,6 +5,7 @@ const awsConfig = {
     region: config.awsConfig.region,
     userPoolId: config.awsConfig.userPoolId,
     userPoolWebClientId: config.awsConfig.userPoolWebClientId,
+    authenticationFlowType: 'USER_PASSWORD_AUTH',
     oauth: {
       domain: "pennsieve.auth.us-east-1.amazoncognito.com",
       scope: ['openid'],
