@@ -16,11 +16,11 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import DatasetFileTypes from './DatasetFileTypes/DatasetFileTypes.vue'
-import DatasetStorageMetrics from './DatasetStorageMetrics/DatasetStorageMetrics.vue'
-import ConceptsList from './ConceptsList/ConceptsList.vue'
-import BfEmptyPageState from '../../shared/bf-empty-page-state/BfEmptyPageState.vue'
-import BfRafter from '../../shared/bf-rafter/BfRafter.vue'
+import DatasetFileTypes from '../DatasetFileTypes/DatasetFileTypes.vue'
+import DatasetStorageMetrics from '../DatasetStorageMetrics/DatasetStorageMetrics.vue'
+import ConceptsList from '../ConceptsList/ConceptsList.vue'
+import BfEmptyPageState from '../../../shared/bf-empty-page-state/BfEmptyPageState.vue'
+import BfRafter from '../../../shared/bf-rafter/BfRafter.vue'
 import DataModelGraph from './DataModelGraph.vue'
 
 export default {
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../../../assets/_variables.scss';
+  @import 'src/assets/variables';
 
   .bf-dataset-explore {
     h1{

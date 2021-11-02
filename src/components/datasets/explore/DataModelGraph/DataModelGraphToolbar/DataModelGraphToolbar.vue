@@ -2,6 +2,40 @@
   <div class="graph-toolbar">
     <el-tooltip
       placement="top"
+      content="Increase packing of nodes"
+      :popper-options="popperOptions"
+      :open-delay="300"
+    >
+      <button
+        @click="$emit('increaseNodes')"
+      >
+        <svg-icon
+          class="icon-zoom-in"
+          icon="icon-zoom-in"
+          height="24"
+          width="24"
+        />
+      </button>
+    </el-tooltip>
+    <el-tooltip
+      placement="top"
+      content="Decrease packing of nodes"
+      :popper-options="popperOptions"
+      :open-delay="300"
+    >
+      <button
+        @click="$emit('decreaseNodes')"
+      >
+        <svg-icon
+          class="icon-zoom-out"
+          icon="icon-zoom-out"
+          height="24"
+          width="24"
+        />
+      </button>
+    </el-tooltip>
+    <el-tooltip
+      placement="top"
       content="Center and Fit to Screen"
       :popper-options="popperOptions"
       :open-delay="300"
@@ -112,7 +146,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import './src/assets/_variables.scss';
+  @import 'src/assets/variables';
 
   .graph-toolbar {
     background: #fff;

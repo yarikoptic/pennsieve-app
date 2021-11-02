@@ -51,7 +51,7 @@
 <script>
   import { propOr } from 'ramda'
 
-  import Pluralizer from '../../../../mixins/Pluralizer/index'
+  import Pluralizer from '../../../../../mixins/Pluralizer'
 
   export default {
     name: 'ModelTooltip',
@@ -107,7 +107,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import './src/assets/_variables.scss';
+  @import 'src/assets/variables';
 
   .model-tooltip {
     left: 0;

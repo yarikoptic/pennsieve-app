@@ -340,7 +340,7 @@
   import BfEmptyPageState from '../../../shared/bf-empty-page-state/BfEmptyPageState.vue'
   import CreateRelationshipTypeDialog from './CreateRelationshipTypeDialog/CreateRelationshipTypeDialog.vue'
   import DeleteRelationshipTypeDialog from './DeleteRelationshipTypeDialog/DeleteRelationshipTypeDialog.vue'
-  import DataModelGraph from '../../../datasets/explore/DataModelGraph.vue'
+  import DataModelGraph from '../../../datasets/explore/DataModelGraph/DataModelGraph.vue'
 
   export default {
     name: 'RelationshipTypes',

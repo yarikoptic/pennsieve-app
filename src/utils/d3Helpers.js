@@ -76,6 +76,7 @@ export const positionEdgeAlt = function(d) {
 
 // Handle node position
 export const positionNode = function(d) {
+
   return `translate(${d.x}, ${d.y})`
 }
 
@@ -83,8 +84,12 @@ export const positionNode = function(d) {
 // Sets the node groups in the position when dragging
 export const tickActions = function() {
   // update link positions
-  d3.selectAll('.link').attr('d', positionEdge)
+  console.log(this.alpha())
+
 
   // update node inner positions
   d3.selectAll('.node-group').attr('transform', positionNode)
+
+  d3.selectAll('.link').attr('d', positionEdge)
 }
+

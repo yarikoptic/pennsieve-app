@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import { mount } from 'vue-test-utils'
 import DataModelGraph from './DataModelGraph.vue'
-import { state, actions, mutations, getters } from '../../../vuex/store'
+import { state, actions, mutations, getters } from '../../../../vuex/store'
 
 const rawData = [
   {

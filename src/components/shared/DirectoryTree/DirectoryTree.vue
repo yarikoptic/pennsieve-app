@@ -1,17 +1,17 @@
 <template>
   <div class="directory-tree">
-    <v-jstree 
-      :data="directoryData" 
+    <v-jstree
+      :data="directoryData"
       whole-row
       :allow-transition="false"
-      @item-click="itemClick" 
+      @item-click="itemClick"
     >
       <template slot-scope="_">
         <div style="display: inherit; width: 200px">
           <i
             v-if="_.model.children && _.model.children.length"
             :class="_.vm.themeIconClasses"
-            role="presentation" 
+            role="presentation"
           />
           <svg-icon
             v-else
@@ -26,8 +26,7 @@
 
 <script>
 
-const VJstree = require('@/components/shared/vue-jstree/dist/vue-jstree.js')['vue-jstree'].default
-
+  import VJstree from 'vue-jstree'
   export default {
     name: 'DirectoryTree',
     components: { VJstree },

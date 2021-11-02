@@ -1,8 +1,8 @@
 import Vuex from 'vuex'
 import { shallow } from 'vue-test-utils'
 import ExploreCollaborators from './ExploreCollaborators.vue'
-import EventBus from '../../../utils/event-bus'
-import { actions, mutations, getters } from '../../../vuex/store'
+import EventBus from '../../../../utils/event-bus'
+import { actions, mutations, getters } from '../../../../vuex/store'
 import flushPromises from 'flush-promises'
 
 describe('ExploreCollaborators.vue', () => {

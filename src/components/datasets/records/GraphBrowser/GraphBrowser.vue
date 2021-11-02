@@ -1,6 +1,6 @@
 <template>
   <div class="graph-browser">
-    <data-model-graph
+    <data-grid-graph
       ref="dataModelGraph"
       :show-title="false"
       :height="chartHeight"
@@ -42,7 +42,9 @@
 <script>
   import debounce from 'lodash/debounce'
 
-  import DataModelGraph from '../../explore/DataModelGraph.vue'
+  import DataGridGraph from '../../explore/DataModelGraph/DataGridGraph.vue'
+
+  import DataModelGraph from '../../explore/DataModelGraph/DataModelGraph.vue'
   import ModelsList from '../ModelsList/ModelsList.vue'
 
   import EventBus from '../../../../utils/event-bus'
@@ -55,6 +57,7 @@
     name: 'GraphBrowser',
 
     components: {
+      DataGridGraph,
       DataModelGraph,
       ModelsList
     },

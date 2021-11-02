@@ -86,14 +86,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import User from '../../shared/user/User.vue'
-import CircleIcon from '../../shared/circle-icon/CircleIcon.vue'
-import CollaboratorLabel from '../../shared/collaborator-label/CollaboratorLabel.vue'
-import UserRoles from '../../../mixins/user-roles'
-import Sharing from '../../../mixins/sharing'
-import Sorter from '../../../mixins/sorter'
-import Request from '../../../mixins/request'
-import addPropsToTeams from '../../../utils/addPropsToTeams'
+import User from '../../../shared/user/User.vue'
+import CircleIcon from '../../../shared/circle-icon/CircleIcon.vue'
+import CollaboratorLabel from '../../../shared/collaborator-label/CollaboratorLabel.vue'
+import UserRoles from '../../../../mixins/user-roles'
+import Sharing from '../../../../mixins/sharing'
+import Sorter from '../../../../mixins/sorter'
+import Request from '../../../../mixins/request'
+import addPropsToTeams from '../../../../utils/addPropsToTeams'
 
 import { prop, pathOr, propOr, find, propEq, pathEq, defaultTo, assoc, take } from 'ramda'
 
