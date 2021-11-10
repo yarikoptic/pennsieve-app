@@ -5,13 +5,13 @@ const awsConfig = {
     region: config.awsConfig.region,
     userPoolId: config.awsConfig.userPoolId,
     userPoolWebClientId: config.awsConfig.userPoolWebClientId,
-    authenticationFlowType: 'USER_PASSWORD_AUTH',
+    authenticationFlowType: config.awsConfig.authenticationFlowType,
     oauth: {
-      domain: "pennsieve.auth.us-east-1.amazoncognito.com",
-      scope: ['openid'],
-      redirectSignIn: 'http://localhost:3000',
-      redirectSignOut: 'http://localhost:3000/logout',
-      responseType: 'token',
+      domain: config.awsConfig.oauth.domain,
+      scope: config.awsConfig.oauth.scope,
+      redirectSignIn: config.awsConfig.oauth.redirectSignIn,
+      redirectSignOut: config.awsConfig.oauth.redirectSignOut,
+      responseType: config.awsConfig.oauth.responseType,
     }
   }
 }
