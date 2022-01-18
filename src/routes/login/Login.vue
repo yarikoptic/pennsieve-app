@@ -56,7 +56,7 @@
           </el-form-item>
         </el-form>
 
-<!-- Login with ORCiD
+<!-- Login with ORCiD -->
         <p class="centered-spaced">
           <button
             id="login-orcid-button"
@@ -72,7 +72,7 @@
             Login with ORCiD Id
           </button>
         </p>
--->
+<!-- -->
 
         <p v-if="showOrcidError" 
            class="orcid-error-text">
