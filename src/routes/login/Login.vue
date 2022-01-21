@@ -402,8 +402,16 @@ export default Vue.component('bf-login', {
             this.handleLoginSuccess(user)
         }
         var error = this.getFragmentParameterByName('error_description')
-        if (error) {
+        if (error.includes("Already found an entry for username orcid", 0)) {
+            // try federated login again
+            this.sendFederatedLoginRequest("ORCID")
+        }
+        else if (error.includes("PreSignUp failed with error", 0)) {
             this.showOrcidError = true
+        }
+        else if (error) {
+            // TODO: present the error on the login page
+            console.log("doneMounting() error: " + error)
         }
     }
   }
