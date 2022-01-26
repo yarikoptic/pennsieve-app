@@ -238,7 +238,8 @@ export default Vue.component('bf-login', {
   },
 
   methods: {
-    ...mapActions(['updateCognitoUser']),
+    ...mapActions(['updateCognitoUser',
+                   'updateUserToken']),
     /**
      * Handles submit event
      * @param {Object} e
@@ -287,6 +288,7 @@ export default Vue.component('bf-login', {
      handleLoginSuccess: function(user) {
        const token = pathOr('', ['signInUserSession', 'accessToken', 'jwtToken'], user)
        const userAttributes = propOr({}, 'attributes', user)
+       this.updateUserToken(token)
        this.updateCognitoUser(user)
        if (user.challengeName === 'SOFTWARE_TOKEN_MFA') {
          this.showToken = true
