@@ -38,6 +38,7 @@
           :key="integration.id"
           :integration="integration"
           @open-remove-integration="openDeleteIntegrationDialog"
+          @open-edit-integration="openEditIntegrationDialog"
         />
       </div>
 
@@ -78,7 +79,9 @@
 
     <add-edit-integration-dialog
       :visible.sync="addEditIntegrationDialogVisible"
+      :integration-edit.sync="integrationEdit"
       @add-integration="onAddIntegrationConfirm"
+      @edit-integration="onEditIntegrationConfirm"
     />
 
     <remove-integration-dialog
@@ -86,6 +89,12 @@
       :visible.sync="removeIntegrationDialogVisible"
       @delete="onDeleteIntegrationConfirm"
     />
+
+    <integration-api-key-details
+      ref="apiKeyDetails"
+      :visible.sync="APIKeyDetailsVisisble"
+    />
+
 
   </bf-page>
 </template>
@@ -104,19 +113,22 @@ import UserRoles from  '../../../mixins/user-roles'
 import RemoveIntegrationDialog from  '../removeIntegrationDialog'
 
 
-
 import { pathOr, propOr} from 'ramda'
+import DeleteApiKey from "../../my-settings/windows/DeleteApiKey";
+import IntegrationApiKeyDetails from "../integrationApiKeyDetails";
 
 export default {
   name: 'IntegrationsList',
 
   components: {
+    IntegrationApiKeyDetails,
+    DeleteApiKey,
     BfEmptyPageState,
     BfRafter,
     BfButton,
     IntegrationListItem,
     AddEditIntegrationDialog,
-    RemoveIntegrationDialog
+    RemoveIntegrationDialog,
   },
 
   mixins: [
@@ -135,7 +147,9 @@ export default {
     return {
       addEditIntegrationDialogVisible: false,
       removeIntegrationDialogVisible: false,
-      integrationDelete: null
+      APIKeyDetailsVisisble: false,
+      integrationDelete: null,
+      integrationEdit: {}
     }
   },
 
@@ -174,7 +188,8 @@ export default {
   methods: {
     ...mapActions('integrationsModule', [
       'createIntegration',
-      'removeIntegration'
+      'removeIntegration',
+      'editIntegration'
     ]),
 
     ...mapState([
@@ -200,11 +215,48 @@ export default {
 
       return ''
     },
+    openEditIntegrationDialog: function(integration) {
+
+      this.integrationEdit = integration
+      this.addEditIntegrationDialogVisible = true
+    },
     /**
      * Open the add property dialog
      */
     openAddIntegration: function() {
       this.addEditIntegrationDialogVisible = true
+    },
+
+    /**
+     * Update integration via API
+     * @param {Object} Integration
+     */
+    onEditIntegrationConfirm: function(integration){
+      let eventTargets = []
+      for (const [key, value] of Object.entries(integration.eventTypeList)) {
+        if (value) {
+          eventTargets.push(key)
+        }
+      }
+
+      let integrationDTO = {
+        id: integration.id,
+        displayName: integration.displayName,
+        description: integration.description,
+        apiUrl: integration.apiUrl,
+        isPrivate: !integration.isPublic,
+        imageUrl: integration.imageUrl,
+        isDefault: integration.isDefault,
+        hasAccess: integration.hasAccess,
+        targetEvents: eventTargets
+      }
+
+      if (integration.secret) {
+        integrationDTO.secret = integration.secret
+      }
+
+      this.editIntegration(integrationDTO)
+
     },
 
     /**
@@ -228,10 +280,20 @@ export default {
         isPrivate: !integration.isPublic,
         imageUrl: integration.imageUrl,
         isDefault: integration.isDefault,
+        hasAccess: integration.integrationType === 'viewer'? false: true,
         targetEvents: eventTargets
       }
 
-      this.createIntegration(integrationDTO)
+      this.createIntegration(integrationDTO).then(response => {
+        let detailPopup = this.$refs.apiKeyDetails
+        detailPopup.apiKey = {
+          key: response.tokenSecret.key,
+          secret: response.tokenSecret.secret
+        }
+        this.APIKeyDetailsVisisble = true
+        console.log(response)
+        }
+      )
     },
   }
 }

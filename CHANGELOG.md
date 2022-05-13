@@ -1,4 +1,5 @@
-### 34.6.0 (2021-09-10)
+#### 35.1.1 (2022-01-26)
 
-##### Other Changes
+##### Bug Fixes
 
+*  fix typos on landing page (a938277)
