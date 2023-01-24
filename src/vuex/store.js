@@ -9,6 +9,7 @@ import publishingModule from './modules/publishingModule'
 import collectionsModule from './modules/collectionsModule'
 import integrationsModule from './modules/integrationsModule'
 import filesModule from './modules/filesModule'
+import uploadModule from './modules/uploadModule'
 
 Vue.use(Vuex)
 
@@ -942,6 +943,7 @@ export default new Vuex.Store({
     publishingModule,
     collectionsModule,
     integrationsModule,
-    filesModule
+    filesModule,
+    uploadModule
   }
 })
