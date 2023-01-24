@@ -13,7 +13,8 @@ import BfDownloadFile from '../bf-download-file/BfDownloadFile.vue'
 import CheckActiveUser from '../check-active-user/CheckActiveUser.vue'
 import BfNotifications from '../notifications/Notifications.vue'
 import BfUploadExternalFile from '../bf-upload-external-file/BfUploadExternalFile.vue'
-import BfUpload from '../BfUpload/BfUpload.vue'
+// import BfUpload from '../BfUpload/BfUpload.vue'
+import PennsieveUpload from '../PennsieveUpload/PennsieveUpload.vue'
 import SearchAllData from '@/components/SearchAllData/SearchAllData.vue'
 import Office365Dialog from '@/components/datasets/files/Office365Dialog/Office365Dialog.vue'
 import LinkOrcidDialog from '@/components/LinkOrcidDialog/LinkOrcidDialog.vue'
@@ -30,7 +31,6 @@ export default {
   name: 'app',
 
   components: {
-    BfUpload,
     Analytics,
     CheckActiveUser,
     BfNotifications,
@@ -39,7 +39,8 @@ export default {
     BfUploadExternalFile,
     SearchAllData,
     Office365Dialog,
-    LinkOrcidDialog
+    LinkOrcidDialog,
+    PennsieveUpload
   },
 
   mixins: [

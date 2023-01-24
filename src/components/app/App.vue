@@ -25,7 +25,9 @@
       :is-uploading="$store.state.uploading"
     />
 
-    <bf-upload ref="bfUpload" />
+    <!-- <bf-upload ref="bfUpload" /> -->
+
+    <pennsieve-upload ref="psUpload" />
 
     <bf-feedback />
     <bf-analytics />

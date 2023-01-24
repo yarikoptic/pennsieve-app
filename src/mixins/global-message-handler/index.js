@@ -236,7 +236,7 @@ export default {
       const orgPromise = this.sendXhr(this.getActiveOrgUrl(token))
       const profilePromise = this.sendXhr(this.getProfileUrl(token))
 
-      return Promise.all([orgPromise, profilePromise])
+      const activeOrgPromise =  Promise.all([orgPromise, profilePromise])
         .then(([orgs, profile]) => {
           this.updateProfile(profile)
           this.updateUserToken(token)
@@ -255,6 +255,8 @@ export default {
           // handle org switch
           return this.handleRedirects(activeOrg, activeOrgId, preferredOrgId, currentPath)
         })
+
+        return activeOrgPromise
         .then(this.getOrgMembers.bind(this))
         .then(this.getTeams.bind(this))
         .then(this.getPublishers.bind(this))
@@ -595,18 +597,18 @@ export default {
      * @param {Boolean} isAddingFiles
      */
     onOpenUploader: function(isAddingFiles) {
-      const bfUpload = this.$refs.bfUpload
-      bfUpload.isOpen = true
-      bfUpload.isAddingFiles = isAddingFiles
+      const psUpload = this.$refs.psUpload
+      psUpload.isOpen = true
+      psUpload.isAddingFiles = isAddingFiles
     },
 
     /**
      * Close upload component
      */
     onCloseUploader: function() {
-      const bfUpload = this.$refs.bfUpload
-      bfUpload.isOpen = false
-      bfUpload.clearUploadedFiles()
+      const psUpload = this.$refs.psUpload
+      psUpload.isOpen = false
+      psUpload.clearUploadedFiles()
     },
 
     /**
@@ -614,8 +616,8 @@ export default {
      * @param {Object} dataTransfer
      */
     addToUploadQueue: function(dataTransfer) {
-      const bfUpload = this.$refs.bfUpload
-      bfUpload.onDrop(dataTransfer)
+      const psUpload = this.$refs.psUpload
+      psUpload.onDrop(dataTransfer)
 
       this.onOpenUploader({
         detail: {
@@ -628,8 +630,8 @@ export default {
      * @param {Object} e
      */
     addInputFilesToUploadQueue: function(e) {
-      const bfUpload = this.$refs.bfUpload
-      bfUpload.onInputFileChange(e)
+      const psUpload = this.$refs.psUpload
+      psUpload.onInputFileChange(e)
 
       this.onOpenUploader({
         detail: {
