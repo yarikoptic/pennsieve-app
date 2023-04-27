@@ -61,6 +61,7 @@
           <h2>This folder is empty.</h2>
         </template>
       </bf-empty-page-state>
+      <div class="table-wrapper" ref="tableWrapper" @scroll="handleScroll">
       <files-table
           v-if="hasFiles"
           :data="files"
@@ -72,6 +73,7 @@
           @selection-change="setSelectedFiles"
           @click-file-label="onClickLabel"
         />
+      </div>
 
         <file-metadata-info
           :selectedFiles="selectedFiles"
@@ -196,7 +198,9 @@ export default {
       showUploadInfo: false,
       sortDirection: 'asc',
       singleFile: {},
-      deletedDialogOpen: false
+      deletedDialogOpen: false,
+      limit: 25, //change as necessary
+      offset: 0
     }
   },
 
@@ -227,7 +231,7 @@ export default {
       if (this.config.apiUrl && this.userToken) {
         const baseUrl = this.$route.name === 'dataset-files' ? 'datasets' : 'packages'
         const id = this.$route.name === 'dataset-files' ? this.$route.params.datasetId : this.$route.params.fileId
-
+        //return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true&limit=${this.limit}&offset=${this.offset}`
         return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true`
       }
     },
@@ -381,7 +385,17 @@ export default {
         ? subtype
         : defaultType
     },
-
+    
+    /*
+    Check if the user has scrolled past the 'limit'th element and load in more files if they have
+    */
+   handleScroll: functiom(){
+    const tableWrapper = this.$refs.tableWrapper;
+    if (tableWrapper.scrollTop + tableWrapper.clientHeight >= tableWrapper.scrollHeight){
+      //load in more files
+      this.fetchFiles();
+    }
+   },
     /**
      * Send API request to get files for item
      */
@@ -404,6 +418,7 @@ export default {
           if (pkgId) {
             this.scrollToFile(pkgId)
           }
+          //this.offset += this.limit;
         })
         .catch(response => {
           this.handleXhrError(response)
