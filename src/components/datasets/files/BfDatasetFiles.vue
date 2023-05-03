@@ -64,7 +64,7 @@
           </template>
         </bf-empty-page-state>
         <files-table
-          v-if="hasFiles"
+          v-if="hasFiles && !isLoading"
           :data="files"
           :multiple-selected="multipleSelected"
           @move="showMove"
