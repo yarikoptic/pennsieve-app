@@ -11,21 +11,23 @@
         />
       </div>
     </bf-rafter>
-    <div>
-      <div v-if="!isLoading" class="actions-container">
+    <div v-if="getPermission()">
+      <div
+        v-if="!isLoading && getPermission('editor')"
+        class="actions-container"
+      >
         <button class="undelete-button actions-item" @click="NavToDeleted">
           <svg-icon class="mr-8" icon="icon-trash" height="22" width="22" />
           <div>Restore Deleted</div>
         </button>
         <button
-          v-if="getPermission('editor')"
           class="actions-item"
           :disabled="datasetLocked"
           data-cy="createNewFolder"
           @click="openPackageDialog"
         >
           <svg-icon
-            class="mr-8 actions-icon plus-icon"
+            class="mr-8 plus-icon actions-item"
             icon="icon-plus"
             height="36"
             width="36"
@@ -214,7 +216,6 @@ export default {
     hasFiles: function() {
       return this.files.length > 0
     },
-
     /**
      * Get files URL for dataset
      * @returns {String}
@@ -335,7 +336,6 @@ export default {
 
     next()
   },
-
   methods: {
     //Navigates to dataset trash bin modal
     NavToDeleted: function() {
