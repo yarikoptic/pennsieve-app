@@ -389,7 +389,7 @@ export default {
     /*
     Check if the user has scrolled past the 'limit'th element and load in more files if they have
     */
-   handleScroll: functiom(){
+   handleScroll: function(){
     const tableWrapper = this.$refs.tableWrapper;
     if (tableWrapper.scrollTop + tableWrapper.clientHeight >= tableWrapper.scrollHeight){
       //load in more files
@@ -399,7 +399,7 @@ export default {
     /**
      * Send API request to get files for item
      */
-    fetchFiles: function () {
+    fetchFiles: function(){
       this.sendXhr(this.getFilesUrl)
         .then(response => {
           this.file = response
