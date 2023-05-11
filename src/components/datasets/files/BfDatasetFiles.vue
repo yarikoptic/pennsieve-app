@@ -200,7 +200,8 @@ export default {
       singleFile: {},
       deletedDialogOpen: false,
       limit: 25, //change as necessary
-      offset: 0
+      offset: 0,
+      return_limit: 25 //change as necessary
     }
   },
 
@@ -393,7 +394,9 @@ export default {
     const tableWrapper = this.$refs.tableWrapper;
     if (tableWrapper.scrollTop + tableWrapper.clientHeight >= tableWrapper.scrollHeight){
       //load in more files
-      this.fetchFiles();
+      if (this.return_limit > 0){
+        this.fetchFiles();
+      }
     }
    },
     /**
@@ -413,6 +416,8 @@ export default {
           })
           this.sortedFiles = this.returnSort('content.name', this.files, this.sortDirection)
           this.ancestors = response.ancestors
+          //the limit returned by the response. If it is 0, then there are no more packages to fetch and we stop invoking fetchFiles()
+          this.return_limit = response.limit;
 
           const pkgId = pathOr('', ['query', 'pkgId'], this.$route)
           if (pkgId) {
