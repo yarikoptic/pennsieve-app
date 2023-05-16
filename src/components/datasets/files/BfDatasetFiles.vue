@@ -42,6 +42,7 @@
           </div>
         </div>
         <div class="file-meta-wrapper">
+          <div class="table-wrapper" ref="tableWrapper" @scroll="handleScroll">
           <files-table
             :data="files"
             :multiple-selected="multipleSelected"
@@ -58,6 +59,7 @@
             :ancestors="ancestors"
             :folder="file"
           />
+        </div>
         </div>
       </bf-stage>
     </div>
@@ -209,9 +211,7 @@ export default {
           this.$route.name === 'dataset-files'
             ? this.$route.params.datasetId
             : this.$route.params.fileId
-        return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${
-          this.userToken
-        }&includeAncestors=true&limit=${this.limit}&offset=${this.offset}`
+        return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true&limit=${this.limit}&offset=${this.offset}`
         //return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true`
       }
     },
