@@ -201,7 +201,7 @@ export default {
       deletedDialogOpen: false,
       limit: 25, //change as necessary
       offset: 0,
-      return_limit: 25 //change as necessary
+      scroll_flag: true //set to false when there are no more children to return for the page
     }
   },
 
@@ -232,8 +232,8 @@ export default {
       if (this.config.apiUrl && this.userToken) {
         const baseUrl = this.$route.name === 'dataset-files' ? 'datasets' : 'packages'
         const id = this.$route.name === 'dataset-files' ? this.$route.params.datasetId : this.$route.params.fileId
-        //return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true&limit=${this.limit}&offset=${this.offset}`
-        return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true`
+        return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true&limit=${this.limit}&offset=${this.offset}`
+        //return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true`
       }
     },
 
@@ -394,9 +394,10 @@ export default {
     const tableWrapper = this.$refs.tableWrapper;
     if (tableWrapper.scrollTop + tableWrapper.clientHeight >= tableWrapper.scrollHeight){
       //load in more files
-      if (this.return_limit > 0){
+      console.log("FETCHING MORE FILES")
+      if (this.scroll_flag == true){
         this.fetchFiles();
-      }
+     }
     }
    },
     /**
@@ -416,8 +417,13 @@ export default {
           })
           this.sortedFiles = this.returnSort('content.name', this.files, this.sortDirection)
           this.ancestors = response.ancestors
-          //the limit returned by the response. If it is 0, then there are no more packages to fetch and we stop invoking fetchFiles()
-          this.return_limit = response.limit;
+          //If it is 0, then there are no more packages to fetch and we stop invoking fetchFiles() on scroll 
+          if (this.sortedFiles.length > 0) {
+            this.scroll_flag = true;
+          }
+          else {
+            this.scroll_flag = false;
+          }
 
           const pkgId = pathOr('', ['query', 'pkgId'], this.$route)
           if (pkgId) {
