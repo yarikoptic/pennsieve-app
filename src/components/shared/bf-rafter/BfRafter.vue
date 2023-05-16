@@ -143,7 +143,6 @@
     }
   }
   .condensed & {
-    background: $white;
     box-shadow: 1px 1px 0 0 $gray_2;
     padding: 16px 32px;
     &.with-tabs {
