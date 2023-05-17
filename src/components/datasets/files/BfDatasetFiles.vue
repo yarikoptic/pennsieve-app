@@ -53,13 +53,13 @@
             @selection-change="setSelectedFiles"
             @click-file-label="onClickLabel"
           />
-
+        </div>
           <file-metadata-info
             :selectedFiles="selectedFiles"
             :ancestors="ancestors"
             :folder="file"
           />
-        </div>
+        
         </div>
       </bf-stage>
     </div>
@@ -174,9 +174,10 @@ export default {
       sortDirection: 'asc',
       singleFile: {},
       deletedDialogOpen: false,
-      limit: 25, //change as necessary
+      limit: 5, //change as necessary
       offset: 0,
-      scroll_flag: true //set to false when there are no more children to return for the page
+      scroll_flag: true, //set to false when there are no more children to return for the page
+      is_loading_files: false
     }
   },
 
@@ -207,12 +208,15 @@ export default {
       if (this.config.apiUrl && this.userToken) {
         const baseUrl =
           this.$route.name === 'dataset-files' ? 'datasets' : 'packages'
-        const id =
+        const id = 
           this.$route.name === 'dataset-files'
             ? this.$route.params.datasetId
             : this.$route.params.fileId
         return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true&limit=${this.limit}&offset=${this.offset}`
         //return `${this.config.apiUrl}/${baseUrl}/${id}?api_key=${this.userToken}&includeAncestors=true`
+      }
+      else {
+        return ''
       }
     },
 
@@ -376,6 +380,9 @@ export default {
     Check if the user has scrolled past the 'limit'th element and load in more files if they have
     */
     handleScroll: function() {
+      console.log('CLIENT HEIGHT: ', tableWrapper.clientHeight)
+      console.log('SCROLL TOP: ', tableWrapper.scrollTop)
+      console.log('SCROLL HEIGHT: ', tableWrapper.scrollHeight)
       const tableWrapper = this.$refs.tableWrapper
       if (
         tableWrapper.scrollTop + tableWrapper.clientHeight >=
@@ -907,6 +914,10 @@ export default {
 
 <style scoped lang="scss">
 @import '../../../assets/_variables.scss';
+
+.table-wrapper {
+  overflow-y: auto;
+}
 
 .file-meta-wrapper {
   display: flex;
