@@ -177,7 +177,7 @@ export default {
       limit: 5, //change as necessary
       offset: 0,
       scroll_flag: true, //set to false when there are no more children to return for the page
-      is_loading_files: false
+      is_loading_files: false //prevents simultaneous API calls
     }
   },
 
@@ -274,6 +274,9 @@ export default {
   },
 
   mounted: function() {
+
+    this.adjustTableHeight();
+
     if (this.getFilesUrl && !this.files.length) {
       this.fetchFiles()
     }
@@ -323,6 +326,15 @@ export default {
   },
 
   methods: {
+
+    //adjusts table height according to whatever limit we provide
+    adjustTableHeight(){
+      const tableWrapper = this.$refs.tableWrapper;
+      const tableHeight = this.limit * 30; //adjust with desired row height in pixels
+
+      tableWrapper.style.height = `${tableHeight}px`;
+    },
+
     //Navigates to dataset trash bin modal
     NavToDeleted: function() {
       //CONSIDER DOING SOMETHING LIKE FETCHFILES()
@@ -379,26 +391,28 @@ export default {
     /*
     Check if the user has scrolled past the 'limit'th element and load in more files if they have
     */
-    handleScroll: function() {
+    handleScroll(event) {
       console.log('CLIENT HEIGHT: ', tableWrapper.clientHeight)
       console.log('SCROLL TOP: ', tableWrapper.scrollTop)
       console.log('SCROLL HEIGHT: ', tableWrapper.scrollHeight)
-      const tableWrapper = this.$refs.tableWrapper
+      const tableWrapper = this.$refs.tableWrapper;
       if (
-        tableWrapper.scrollTop + tableWrapper.clientHeight >=
+        this.scroll_flag == true && !this.is_loading_files && tableWrapper.scrollTop + tableWrapper.clientHeight >=
         tableWrapper.scrollHeight
       ) {
         //load in more files
         console.log('FETCHING MORE FILES')
-        if (this.scroll_flag == true) {
+        //if (this.scroll_flag == true) {
           this.fetchFiles()
-        }
+        //}
       }
     },
     /**
      * Send API request to get files for item
      */
+    //NOTE: may need to make an async function
     fetchFiles: function() {
+      this.is_loading_files == true;
       this.sendXhr(this.getFilesUrl)
         .then(response => {
           this.file = response
@@ -428,10 +442,15 @@ export default {
           if (pkgId) {
             this.scrollToFile(pkgId)
           }
-          //this.offset += this.limit;
+          //updates offset for next round of files fetching
+          this.offset += this.limit;
+
+          this.is_loading_files == false;
+
         })
         .catch(response => {
           this.handleXhrError(response)
+          this.is_loading_files == false;
         })
     },
 
