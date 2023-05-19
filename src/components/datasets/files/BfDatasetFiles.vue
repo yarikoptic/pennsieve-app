@@ -330,7 +330,7 @@ export default {
     //adjusts table height according to whatever limit we provide
     adjustTableHeight(){
       const tableWrapper = this.$refs.tableWrapper;
-      const tableHeight = this.limit * 30; //adjust with desired row height in pixels
+      const tableHeight = this.limit * 41; //adjust with desired row height in pixels
 
       tableWrapper.style.height = `${tableHeight}px`;
     },
@@ -392,9 +392,9 @@ export default {
     Check if the user has scrolled past the 'limit'th element and load in more files if they have
     */
     handleScroll(event) {
-      console.log('CLIENT HEIGHT: ', tableWrapper.clientHeight)
-      console.log('SCROLL TOP: ', tableWrapper.scrollTop)
-      console.log('SCROLL HEIGHT: ', tableWrapper.scrollHeight)
+      //console.log('CLIENT HEIGHT: ', tableWrapper.clientHeight)
+      //console.log('SCROLL TOP: ', tableWrapper.scrollTop)
+      //console.log('SCROLL HEIGHT: ', tableWrapper.scrollHeight)
       const tableWrapper = this.$refs.tableWrapper;
       if (
         this.scroll_flag == true && !this.is_loading_files && tableWrapper.scrollTop + tableWrapper.clientHeight >=
@@ -412,7 +412,8 @@ export default {
      */
     //NOTE: may need to make an async function
     fetchFiles: function() {
-      this.is_loading_files == true;
+      console.log("FETCH FILES CALLED")
+      this.is_loading_files = true;
       this.sendXhr(this.getFilesUrl)
         .then(response => {
           this.file = response
@@ -432,7 +433,7 @@ export default {
           )
           this.ancestors = response.ancestors
           //If it is 0, then there are no more packages to fetch and we stop invoking fetchFiles() on scroll
-          if (this.sortedFiles.length > 0) {
+          if (this.files.length > 0) {
             this.scroll_flag = true
           } else {
             this.scroll_flag = false
@@ -442,9 +443,6 @@ export default {
           if (pkgId) {
             this.scrollToFile(pkgId)
           }
-          //updates offset for next round of files fetching
-          this.offset += this.limit;
-
           this.is_loading_files == false;
 
         })
@@ -452,6 +450,8 @@ export default {
           this.handleXhrError(response)
           this.is_loading_files == false;
         })
+        //updates offset for next round of files fetching
+        //this.offset += this.limit;
     },
 
     /**
