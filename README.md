@@ -1,4 +1,4 @@
-# Pennsieve
+# Pennsieve App
 
 ## Prerequisites
 
