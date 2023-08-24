@@ -1,13 +1,8 @@
 <template>
   <bf-page class="dataset-overview">
-    <locked-banner
-      slot="banner"
-    />
+    <locked-banner slot="banner" />
     <bf-rafter slot="heading" class="overview">
-      <div
-        slot="heading"
-        class="flex-heading"
-      >
+      <div slot="heading" class="flex-heading">
         <div class="dataset-heading">
           <dataset-banner
             empty-state-text="Add a banner image."
@@ -15,9 +10,7 @@
           />
 
           <div class="dataset-heading-info">
-            <h1 class="mb-8">
-              {{ datasetName }}
-            </h1>
+            <h1 class="mb-8">{{ datasetName }}</h1>
 
             <div class="dataset-owners">
               <div
@@ -40,78 +33,55 @@
             />
 
             <div class="dataset-heading-meta">
-              Last updated on <b>{{ lastUpdatedDate }}</b>
+              Last updated on
+              <b>{{ lastUpdatedDate }}</b>
               <template v-if="isPublished && publishedCount > 0">
-                (<a
-                :href="discoverLink"
-                target="_blank"
-              >
-                Version {{ publishedVersionLabel }}
-              </a>)
+                (
+                <a :href="discoverLink" target="_blank">
+                  Version {{ publishedVersionLabel }}
+                </a>
+                )
                 <div class="sharing-status">
-
-                  Last published on <b>{{ publishedDate }}</b>
-                  <a
-                    target="_blank"
-                    :href="discoverLink"
-                    class="discover-link"
-                  >
+                  Last published on
+                  <b>{{ publishedDate }}</b>
+                  <a target="_blank" :href="discoverLink" class="discover-link">
                     View on Discover
                   </a>
                 </div>
 
                 <div class="sharing-status">
-                  Published dataset DOI: <a :href="doiUrl">{{datasetDoi.doi}}</a>
+                  Published dataset DOI:
+                  <a :href="doiUrl">{{ datasetDoi.doi }}</a>
                 </div>
               </template>
-
-
-
-
 
               <!--            <div class="dataset-corresponding-contributor">-->
               <!--              <p>Dataset owner:</p>-->
               <!--              <contributor-item :contributor="correspondingContributor" />-->
               <!--            </div>-->
 
-              <div>
-
-              </div>
+              <div></div>
             </div>
           </div>
         </div>
 
         <div class="dataset-info-stats">
           <div class="dataset-info-stat">
-            <svg-icon
-              name="icon-files"
-              height="20"
-              width="20"
-            />
+            <svg-icon name="icon-files" height="20" width="20" />
             <div>
               <strong>{{ packageTypeCount }}</strong>
-              <router-link :to="{ name: 'dataset-files' }">
-                Files
-              </router-link>
+              <router-link :to="{ name: 'dataset-files' }">Files</router-link>
             </div>
           </div>
           <div class="dataset-info-stat">
-            <svg-icon
-              name="icon-storage"
-              height="20"
-              width="20"
-            />
+            <svg-icon name="icon-storage" height="20" width="20" />
             <div>
               <strong>{{ datasetStorage.number }}</strong>
               {{ datasetStorage.unit }}
             </div>
           </div>
           <div class="dataset-info-stat">
-            <svg-icon
-              name="icon-document"
-              height="20"
-              width="20"
-            />
+            <svg-icon name="icon-document" height="20" width="20" />
             <div>
               <strong>{{ totalRecordsCount.toLocaleString('en') }}</strong>
               <router-link :to="{ name: 'records' }">
@@ -120,19 +90,15 @@
             </div>
           </div>
           <div class="dataset-info-stat">
-            <svg-icon
-              name="icon-license"
-              height="20"
-              width="20"
-            />
+            <svg-icon name="icon-license" height="20" width="20" />
             <div>
               <router-link
                 :to="{
-                name: 'dataset-settings',
-                query: {
-                  focusInput: 'inputLicense'
-                }
-              }"
+                  name: 'dataset-settings',
+                  query: {
+                    focusInput: 'inputLicense'
+                  }
+                }"
               >
                 {{ datasetLicense }}
               </router-link>
@@ -140,134 +106,131 @@
           </div>
         </div>
       </div>
-
     </bf-rafter>
     <bf-stage slot="stage">
+      <!--      <data-card-->
+      <!--        v-if="isChecklistDimissed === false && hasManagerPermissions"-->
+      <!--        class="mb-32 grey compact"-->
+      <!--        title="Dataset Publishing Checklist:"-->
+      <!--        :padding="false"-->
+      <!--      >-->
+      <!--        <button-->
+      <!--          slot="title-aux"-->
+      <!--          class="linked"-->
+      <!--          @click="dismissDatasetChecklist"-->
+      <!--        >-->
+      <!--          Dismiss-->
+      <!--        </button>-->
 
+      <!--        <checklist-item-->
+      <!--          :icon="computeChecklistIcon(hasSubtitle)"-->
+      <!--          :route="{-->
+      <!--            name: 'dataset-settings',-->
+      <!--            query: {-->
+      <!--              focusInput: 'inputDescription'-->
+      <!--            }-->
+      <!--          }"-->
+      <!--          cta="Add a subtitle"-->
+      <!--        >-->
+      <!--          gives others a brief description of your dataset.-->
+      <!--        </checklist-item>-->
 
-<!--      <data-card-->
-<!--        v-if="isChecklistDimissed === false && hasManagerPermissions"-->
-<!--        class="mb-32 grey compact"-->
-<!--        title="Dataset Publishing Checklist:"-->
-<!--        :padding="false"-->
-<!--      >-->
-<!--        <button-->
-<!--          slot="title-aux"-->
-<!--          class="linked"-->
-<!--          @click="dismissDatasetChecklist"-->
-<!--        >-->
-<!--          Dismiss-->
-<!--        </button>-->
+      <!--        <checklist-item-->
+      <!--          :icon="computeChecklistIcon(hasTags)"-->
+      <!--          :route="{-->
+      <!--            name: 'dataset-settings',-->
+      <!--            query: {-->
+      <!--              focusInput: 'inputTags'-->
+      <!--            }-->
+      <!--          }"-->
+      <!--          cta="Add tags"-->
+      <!--        >-->
+      <!--          make it easier for people to find your dataset in Discover.-->
+      <!--        </checklist-item>-->
 
-<!--        <checklist-item-->
-<!--          :icon="computeChecklistIcon(hasSubtitle)"-->
-<!--          :route="{-->
-<!--            name: 'dataset-settings',-->
-<!--            query: {-->
-<!--              focusInput: 'inputDescription'-->
-<!--            }-->
-<!--          }"-->
-<!--          cta="Add a subtitle"-->
-<!--        >-->
-<!--          gives others a brief description of your dataset.-->
-<!--        </checklist-item>-->
+      <!--        <checklist-item-->
+      <!--          :icon="computeChecklistIcon(hasDescription)"-->
+      <!--          cta="Add a description"-->
+      <!--          :route="{-->
+      <!--            query: {-->
+      <!--              editDescription: true-->
+      <!--            }-->
+      <!--          }"-->
+      <!--        >-->
+      <!--          provide a detailed overview of your dataset and outline your findings and analysis for others.-->
+      <!--        </checklist-item>-->
 
-<!--        <checklist-item-->
-<!--          :icon="computeChecklistIcon(hasTags)"-->
-<!--          :route="{-->
-<!--            name: 'dataset-settings',-->
-<!--            query: {-->
-<!--              focusInput: 'inputTags'-->
-<!--            }-->
-<!--          }"-->
-<!--          cta="Add tags"-->
-<!--        >-->
-<!--          make it easier for people to find your dataset in Discover.-->
-<!--        </checklist-item>-->
+      <!--        <checklist-item-->
+      <!--          :icon="computeChecklistIcon(hasBanner)"-->
+      <!--          cta="Add an image"-->
+      <!--          :route="{-->
+      <!--            name: 'dataset-settings',-->
+      <!--            query: {-->
+      <!--              focusInput: 'bannerImage'-->
+      <!--            }-->
+      <!--          }"-->
+      <!--        >-->
+      <!--          add an image to help your dataset stand out in listings.-->
+      <!--        </checklist-item>-->
 
-<!--        <checklist-item-->
-<!--          :icon="computeChecklistIcon(hasDescription)"-->
-<!--          cta="Add a description"-->
-<!--          :route="{-->
-<!--            query: {-->
-<!--              editDescription: true-->
-<!--            }-->
-<!--          }"-->
-<!--        >-->
-<!--          provide a detailed overview of your dataset and outline your findings and analysis for others.-->
-<!--        </checklist-item>-->
+      <!--        <checklist-item-->
+      <!--          :icon="computeChecklistIcon(hasContributors)"-->
+      <!--          cta="Add contributors"-->
+      <!--          :route="{-->
+      <!--            name: 'dataset-settings',-->
+      <!--            query: {-->
+      <!--              focusInput: 'inputAddContributor'-->
+      <!--            }-->
+      <!--          }"-->
+      <!--        >-->
+      <!--          list all of the people who have contributed to this dataset.-->
+      <!--        </checklist-item>-->
 
-<!--        <checklist-item-->
-<!--          :icon="computeChecklistIcon(hasBanner)"-->
-<!--          cta="Add an image"-->
-<!--          :route="{-->
-<!--            name: 'dataset-settings',-->
-<!--            query: {-->
-<!--              focusInput: 'bannerImage'-->
-<!--            }-->
-<!--          }"-->
-<!--        >-->
-<!--          add an image to help your dataset stand out in listings.-->
-<!--        </checklist-item>-->
+      <!--        <checklist-item-->
+      <!--          :icon="computeChecklistIcon(hasDatasetDoi)"-->
+      <!--          cta="Reserve a DOI"-->
+      <!--          :route="{-->
+      <!--            name: 'publishing-settings',-->
+      <!--            query: {-->
+      <!--              focusInput: 'dataciteDoi'-->
+      <!--            }-->
+      <!--          }"-->
+      <!--        >-->
+      <!--          reserve a DataCite DOI for published research.-->
+      <!--        </checklist-item>-->
 
-<!--        <checklist-item-->
-<!--          :icon="computeChecklistIcon(hasContributors)"-->
-<!--          cta="Add contributors"-->
-<!--          :route="{-->
-<!--            name: 'dataset-settings',-->
-<!--            query: {-->
-<!--              focusInput: 'inputAddContributor'-->
-<!--            }-->
-<!--          }"-->
-<!--        >-->
-<!--          list all of the people who have contributed to this dataset.-->
-<!--        </checklist-item>-->
+      <!--        <checklist-item-->
+      <!--          :icon="computeChecklistIcon(hasDatasetLicense)"-->
+      <!--          cta="Add a license"-->
+      <!--          :route="{-->
+      <!--            name: 'dataset-settings',-->
+      <!--            query: {-->
+      <!--              focusInput: 'inputLicense'-->
+      <!--            }-->
+      <!--          }"-->
+      <!--        >-->
+      <!--          let others know how they can use this data in their own research.-->
+      <!--        </checklist-item>-->
 
-<!--        <checklist-item-->
-<!--          :icon="computeChecklistIcon(hasDatasetDoi)"-->
-<!--          cta="Reserve a DOI"-->
-<!--          :route="{-->
-<!--            name: 'publishing-settings',-->
-<!--            query: {-->
-<!--              focusInput: 'dataciteDoi'-->
-<!--            }-->
-<!--          }"-->
-<!--        >-->
-<!--          reserve a DataCite DOI for published research.-->
-<!--        </checklist-item>-->
-
-<!--        <checklist-item-->
-<!--          :icon="computeChecklistIcon(hasDatasetLicense)"-->
-<!--          cta="Add a license"-->
-<!--          :route="{-->
-<!--            name: 'dataset-settings',-->
-<!--            query: {-->
-<!--              focusInput: 'inputLicense'-->
-<!--            }-->
-<!--          }"-->
-<!--        >-->
-<!--          let others know how they can use this data in their own research.-->
-<!--        </checklist-item>-->
-
-<!--        <checklist-item-->
-<!--          :icon="computeChecklistIcon(datasetOwnerHasOrcidId)"-->
-<!--          cta="Link ORCID Account"-->
-<!--          :route="{-->
-<!--            name: 'publishing-settings',-->
-<!--            query: {-->
-<!--              focusInput: 'orcidId'-->
-<!--            }-->
-<!--          }"-->
-<!--          :show-link="isDatasetOwner"-->
-<!--        >-->
-<!--          <template v-if="isDatasetOwner">-->
-<!--            link your ORCID iD to distinguish yourself from other researchers-->
-<!--          </template>-->
-<!--          <template v-else>-->
-<!--            link the dataset owner's ORCID iD to distinguish themselves from other researchers-->
-<!--          </template>-->
-<!--        </checklist-item>-->
-<!--      </data-card>-->
+      <!--        <checklist-item-->
+      <!--          :icon="computeChecklistIcon(datasetOwnerHasOrcidId)"-->
+      <!--          cta="Link ORCID Account"-->
+      <!--          :route="{-->
+      <!--            name: 'publishing-settings',-->
+      <!--            query: {-->
+      <!--              focusInput: 'orcidId'-->
+      <!--            }-->
+      <!--          }"-->
+      <!--          :show-link="isDatasetOwner"-->
+      <!--        >-->
+      <!--          <template v-if="isDatasetOwner">-->
+      <!--            link your ORCID iD to distinguish yourself from other researchers-->
+      <!--          </template>-->
+      <!--          <template v-else>-->
+      <!--            link the dataset owner's ORCID iD to distinguish themselves from other researchers-->
+      <!--          </template>-->
+      <!--        </checklist-item>-->
+      <!--      </data-card>-->
 
       <data-card
         ref="descriptionDataCard"
@@ -314,7 +277,7 @@
           @save="onReadmeSave"
         />
       </data-card>
-      <br> </br>
+      <br />
       <data-card
         ref="changelogDataCard"
         class="grey compact"
@@ -347,46 +310,51 @@
             Update
           </button>
         </template>
-      <markdown-editor
-        ref="markdownEditor"
-        :value="changelogText"
-        :is-editing="isEditingMarkdown2"
-        :is-saving="isSavingMarkdown"
-        :empty-state="changelogDescriptionEmptyState"
-
-      />
+        <markdown-editor
+          ref="markdownEditor"
+          :value="changelogText"
+          :is-editing="isEditingMarkdown2"
+          :is-saving="isSavingMarkdown"
+          :empty-state="changelogDescriptionEmptyState"
+          @save="onChangelogSave"
+        />
       </data-card>
-
     </bf-stage>
     <stale-update-dialog ref="staleUpdateDialog" />
   </bf-page>
 </template>
 
 <script>
-  import {mapActions, mapGetters, mapState} from 'vuex'
-  import Cookie from 'js-cookie'
-  import {compose, defaultTo, head, last, pathOr, propOr, split, sum, values} from 'ramda'
+import { mapActions, mapGetters, mapState } from 'vuex'
+import Cookie from 'js-cookie'
+import {
+  compose,
+  defaultTo,
+  head,
+  pathOr,
+  propOr,
+  split,
+  sum,
+  values
+} from 'ramda'
 
-  import DatasetBanner from '../DatasetBanner/DatasetBanner.vue'
-  import DataCard from '../../shared/DataCard/DataCard.vue'
-  import ChecklistItem from '../../shared/ChecklistItem/ChecklistItem.vue'
-  import MarkdownEditor from '../../shared/MarkdownEditor/MarkdownEditor.vue'
+import DatasetBanner from '../DatasetBanner/DatasetBanner.vue'
+import DataCard from '../../shared/DataCard/DataCard.vue'
+import MarkdownEditor from '../../shared/MarkdownEditor/MarkdownEditor.vue'
 
-  import BfStorageMetrics from '../../../mixins/bf-storage-metrics/index'
-  import FormatDate from '../../../mixins/format-date/index'
-  import Request from '../../../mixins/request'
-  import DatasetPublishedData from '../../../mixins/dataset-published-data'
+import BfStorageMetrics from '../../../mixins/bf-storage-metrics/index'
+import FormatDate from '../../../mixins/format-date/index'
+import Request from '../../../mixins/request'
+import DatasetPublishedData from '../../../mixins/dataset-published-data'
 
-  import datasetDescriptionEmptyState from './dataset-description-empty-state'
-  import changelogDescriptionEmptyState from './changelog-description-empty-state'
-  import ContributorItem from '../ContributorItem/ContributorItem.vue'
-  import BfRafter from "../../shared/bf-rafter/BfRafter";
-  import BfButton from "../../shared/bf-button/BfButton";
-  import StaleUpdateDialog from "../stale-update-dialog/StaleUpdateDialog";
-  import LockedBanner from '../LockedBanner/LockedBanner';
+import datasetDescriptionEmptyState from './dataset-description-empty-state'
+import changelogDescriptionEmptyState from './changelog-description-empty-state'
+import ContributorItem from '../ContributorItem/ContributorItem.vue'
+import BfRafter from '../../shared/bf-rafter/BfRafter'
+import StaleUpdateDialog from '../stale-update-dialog/StaleUpdateDialog'
+import LockedBanner from '../LockedBanner/LockedBanner'
 
-
-  const replaceLineBreaks = str => {
+const replaceLineBreaks = str => {
   return Object.prototype.toString.call(str) === '[object String]'
     ? str.replace(/(\r\n|\n|\r)/g, '<br>')
     : str
@@ -404,12 +372,10 @@ export default {
   components: {
     LockedBanner,
     DatasetBanner,
-    ChecklistItem,
     DataCard,
     MarkdownEditor,
     ContributorItem,
     BfRafter,
-    BfButton,
     StaleUpdateDialog
   },
 
@@ -462,14 +428,13 @@ export default {
       'isLoadingDatasetDescription',
       'datasetContributors',
       'activeOrganization',
-      'changelogComponent',
+      'changelogComponent'
       //'isLoadingChangelog'
     ]),
 
-    doiUrl: function(){
-      return "https://doi.org/" + this.datasetDoi.doi
+    doiUrl: function() {
+      return 'https://doi.org/' + this.datasetDoi.doi
     },
-
 
     /**
      * Return corresponding contributor details
@@ -689,8 +654,8 @@ export default {
     },
 
     /*
-    *compute changelog endpoint
-    */
+     *compute changelog endpoint
+     */
     datasetChangelogUrl: function() {
       return this.userToken
         ? `${this.config.apiUrl}/datasets/${this.datasetId}/changelog?api_key=${
@@ -710,9 +675,9 @@ export default {
   watch: {
     '$route.query.editDescription': {
       handler: function(val) {
-         if (val) {
-        this.setEditDescription()
-      }
+        if (val) {
+          this.setEditDescription()
+        }
       },
       immediate: true
     },
@@ -734,14 +699,18 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     if (this.$route.query.editDescription) {
       this.setEditDescription()
     }
   },
 
   methods: {
-    ...mapActions(['setDatasetDescription', 'setDatasetDescriptionEtag']),
+    ...mapActions([
+      'setDatasetDescription',
+      'setDatasetDescriptionEtag',
+      'setChangelogText'
+    ]),
 
     /**
      * Check if the dataset checklist
@@ -801,8 +770,34 @@ export default {
       this.isChecklistDimissed = true
     },
 
+    onChangelogSave: function(markdown) {
+      fetch(this.datasetChangelogUrl, {
+        body: JSON.stringify({
+          changelog: markdown
+        }),
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            this.setChangelogText(markdown).finally(() => {
+              this.isSavingMarkdown = false
+              this.isEditingMarkdown2 = false
+            })
+          } else if (response.status === 412) {
+            this.isSavingMarkdown = false
+            this.$refs.staleUpdateDialog.dialogVisible = true
+          } else {
+            throw response
+          }
+        })
+        .catch(this.handleXhrError.bind(this))
+    },
+
     /**
-     * On reaadme save, emitted from the MarkdownEditor
+     * On readme save, emitted from the MarkdownEditor
      * Make a request to the API to save the readme
      * @params {String} markdown
      */
@@ -814,7 +809,7 @@ export default {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'If-Match': this.datasetDescriptionEtag,
+          'If-Match': this.datasetDescriptionEtag
         }
       })
         .then(response => {
@@ -834,25 +829,26 @@ export default {
         .catch(this.handleXhrError.bind(this))
     },
 
-    getChangelog: function(datasetId) {
-      //this.setIsLoadingDatasetDescription(true)
-      const url = `${this.config.apiUrl}/datasets/${datasetId}/changelog?api_key=${this.userToken}`
-      fetch(url)
-        .then(response => {
-          if (response.ok) {
-            response.json().then(data => {
-              const changelog = propOr('', 'changelog', data)
-              this.setChangelogText(changelog)
-            })
-          } else {
-            throw response
-          }
-        })
-        .catch(this.handleXhrError.bind(this))
-        .finally(() => {
-          //this.setIsLoadingChangelog(false)
-        })
-    },
+    // getChangelog: function(datasetId) {
+    //   //this.setIsLoadingDatasetDescription(true)
+    //   const url = `${this.config.apiUrl}/datasets/${datasetId}/changelog?api_key=${this.userToken}`
+    //   fetch(url)
+    //     .then(response => {
+    //       if (response.ok) {
+    //         response.json().then(data => {
+
+    //           const changelog = propOr('', 'changelog', data)
+    //           this.setChangelogText(changelog)
+    //         })
+    //       } else {
+    //         throw response
+    //       }
+    //     })
+    //     .catch(this.handleXhrError.bind(this))
+    //     .finally(() => {
+    //       //this.setIsLoadingChangelog(false)
+    //     })
+    // },
 
     /**
      * Go to the banner image section of the settings page
